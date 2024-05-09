@@ -10,8 +10,10 @@ import static Project.User.users;
 
 public class Librarian extends Person implements Librarian_Procedures {
 	private int employeeID;
-    static LinkedList<Librarian> librarian = new LinkedList<>();
+    public static LinkedList<Librarian> librarian = new LinkedList<>();
 
+    
+  
     
 	public Librarian(String n, int a, String g, int empID) {
 		super(n, a, g);
@@ -170,36 +172,6 @@ public class Librarian extends Person implements Librarian_Procedures {
 		this.employeeID = employeeID;
 	}
 
-	 public void readDataFromFileL() {
-		         String folderPath = "C:\\Users\\user\\eclipse-workspace\\SEM2\\src\\Project";
-		         String fileName = "Librarian.txt";
-		 
-		         try (BufferedReader reader = new BufferedReader(new FileReader(folderPath + "\\" + fileName))) {
-		             String line;
-		           while ((line = reader.readLine()) != null) {
-		                 String[] parts = line.split(",");
-		                int id = Integer.parseInt(parts[0]);
-		                 String name = parts[1];
-		                 int age = Integer.parseInt(parts[2]);
-		                 String gender = parts[3];
-		               Librarian librarian = new Librarian(name, age, gender, id);
-		                 Librarian.librarian.add(librarian);
-		            }
-		         } catch (IOException e) {
-		            
-		         }
+	
 		     }
-		 
-		     public void writeDataToFileL() {
-		         String folderPath = "C:\\Users\\user\\eclipse-workspace\\SEM2\\src\\Project";
-		         String fileName = "Librarian.txt";
-		 
-		         try (PrintWriter writer = new PrintWriter(new FileWriter(folderPath + "\\" + fileName))) {
-		             for (Librarian librarian : Librarian.librarian) {
-		                 writer.println(librarian.getEmployeeID() + "," + librarian.getName() + "," + librarian.getAge() + "," + librarian.getGender());
-		             }
-		         } catch (IOException e) {
-		             
-		         }
-		     }
-}
+

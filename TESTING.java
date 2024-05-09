@@ -2,6 +2,7 @@ package Project;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -18,7 +19,7 @@ import static Project.User.users;
 public class TESTING extends JFrame  {
 	private JButton librarianButton;
     private JButton userButton;
-    
+    private JButton exit;
 
   
     Book book1 = new Book(111,"test","ra","scifi",true,false);
@@ -26,6 +27,8 @@ public class TESTING extends JFrame  {
 User userq = new User("rafik",22,"male",345);
 
 Librarian lib = new Librarian("ali",22,"male",34545);
+Librarian lib1 = new Librarian("test",29,"male",33333);
+
     public TESTING() {
         setTitle("Library Management System");
         setSize(600,500);
@@ -33,7 +36,7 @@ Librarian lib = new Librarian("ali",22,"male",34545);
         setLocationRelativeTo(null);
 
         JPanel mainPanel = new JPanel(new GridLayout(2, 2));
-
+JPanel test = new JPanel();
         mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER,100,175)); //sets the alignment of the components in the panel to the center.
 librarianButton = new JButton("Librarian");
 
@@ -44,6 +47,8 @@ librarianButton.setFont(new Font("Times New Roman", Font.BOLD,16));
         userButton = new JButton("User");
         userButton.setFont(new Font("Times New Roman", Font.BOLD,16));
         
+        exit= new JButton("Exit");
+        exit.setFont(new Font("Times New Roman", Font.BOLD,16));
         librarianButton.addActionListener(new ActionListener() { // when librarian is clicked it opens the librarian section
         	
             public void actionPerformed(ActionEvent e) {
@@ -58,10 +63,29 @@ librarianButton.setFont(new Font("Times New Roman", Font.BOLD,16));
                 dispose();
             }
         });
+    exit.addActionListener(new ActionListener() { // when user is clicked it exits
+            public void actionPerformed(ActionEvent e) {
+             	try {
+           		 ReadWrite w = new ReadWrite();
+           	   ReadWrite.writeToFileB("Books.txt", books);
+           	    ReadWrite.writeToFileU("User.txt", users);
+           	   ReadWrite.writeToFileL("Librarian.txt", librarian);
+           	  
+           	} catch (IOException S) {
+           	    S.printStackTrace();
+           	 System.err.print("I am here");
+           	}
+                dispose();
+            }
+        });
+
         librarianButton.setPreferredSize(new Dimension(100, 50));
         userButton.setPreferredSize(new Dimension(100, 50));
+        exit.setPreferredSize(new Dimension(100, 50));
         mainPanel.add(librarianButton);
         mainPanel.add(userButton);
+        test.add(exit);
+        mainPanel.add(test);
 ;
 mainPanel.setBackground(new Color(122,178,178));
     getContentPane().add(mainPanel); //allowing the user to interact with the buttons and other components contained within mainPanel.
@@ -70,10 +94,25 @@ mainPanel.setBackground(new Color(122,178,178));
         books.add(book2);
        users.add(userq);
        librarian.add(lib);
+       try {
+    	   ReadWrite w = new ReadWrite();
+//    	    ReadWrite.readFromFileB("books.txt");
+    	    ReadWrite.readFromFileU("Users.txt");
+    	    ReadWrite. readFromFileL("Librarian.txt");
+    	} catch (IOException e) {
+    	    e.printStackTrace();
+    	}  
 
-        // Initialize LinkedLists
-       
-        // Read data from files into LinkedLists
+//    	try {
+//    		 ReadWrite w = new ReadWrite();
+//    	    w.writeToFileB("Books.txt", books);
+//    	    w.writeToFileU("User.txt", users);
+//    	   w.writeToFileL("Librarian.txt", librarian);
+//    	} catch (IOException e) {
+//    	    e.printStackTrace();
+//    	}
+
+      
        
 //lezim nhot b2lba shi
         setVisible(true);
@@ -335,7 +374,7 @@ setLocationRelativeTo(null);
              setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
          	setLocationRelativeTo(null);
 JFrame f = new JFrame();
-         	JPanel panel = new JPanel(new GridLayout(8, 1));
+         	JPanel panel = new JPanel(new GridLayout(9, 1));
             panel.setBackground(new Color(240, 240, 240)); // Light gray background
             
             
@@ -347,6 +386,7 @@ JFrame f = new JFrame();
             JButton returnBook = new JButton("Return Book");
             JButton reserveBook = new JButton("Reserve Book");
             JButton goBack = new JButton("Go Back");
+            JButton exit = new JButton("Exit");
                      
                  checkInfo.setBackground(new Color(189, 195, 199)); 
                  searchByTitle.setBackground(new Color(189, 195, 199)); 
@@ -356,7 +396,8 @@ JFrame f = new JFrame();
                  returnBook.setBackground(new Color(189, 195, 199)); 
                  reserveBook.setBackground(new Color(189, 195, 199)); 
                  goBack.setBackground(new Color(189, 195, 199));
-            
+                 exit.setBackground(new Color(189, 195, 199));
+
             
             checkInfo.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -437,6 +478,13 @@ JFrame f = new JFrame();
                 
                 }
             });
+            exit.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                dispose();
+                
+                }
+            });
             
             
             
@@ -449,7 +497,7 @@ JFrame f = new JFrame();
             panel.add(returnBook);
             panel.add(reserveBook);
             panel.add(goBack);
-
+panel.add(exit);
             getContentPane().add(panel);
     	}
     }
@@ -462,7 +510,7 @@ JFrame f = new JFrame();
              setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
          	setLocationRelativeTo(null);
  JFrame f = new JFrame();
-         	JPanel panel = new JPanel(new GridLayout(10, 1,10,10));
+         	JPanel panel = new JPanel(new GridLayout(11, 1,10,10));
             panel.setBackground(new Color(240, 240, 240)); // Light gray background
             
             JButton addLibrarian = new JButton("Add Librarian");
@@ -476,6 +524,8 @@ JFrame f = new JFrame();
             JButton reserveBook = new JButton("Reserve Book");
             JButton AddBook = new JButton("Add Book");
             JButton goBack = new JButton("go back");
+            JButton exit = new JButton("exit");
+
                      addLibrarian.setBackground(new Color(189, 195, 199)); //grey color 
                      addUser.setBackground(new Color(189, 195, 199)); 
                      checkInfo.setBackground(new Color(189, 195, 199)); 
@@ -487,7 +537,7 @@ JFrame f = new JFrame();
                      reserveBook.setBackground(new Color(189, 195, 199)); 
                      AddBook.setBackground(new Color(189, 195, 199));   
                      goBack.setBackground(new Color(189, 195, 199)); 
-
+                     exit.setBackground(new Color(189, 195, 199)); 
                      
                      addLibrarian.addActionListener(new ActionListener() {
                     	 
@@ -603,6 +653,14 @@ return;
                 
                 }
             });
+            exit.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                dispose();
+                
+                }
+            });
+           
            
             
             
@@ -739,18 +797,20 @@ return;
 	        JPanel panel = new JPanel(new GridLayout(8, 1));
 	       panel.setBackground(new Color(240, 240, 240));
 	        JLabel nameLabel = new JLabel("Name of user:");
-	        nameLabel.setBackground(new Color(71, 147, 175));
-	        
+	        nameLabel.setBackground(new Color(190, 215, 220));
 	        nameField = new JTextField();
-nameField.setBackground(new Color(255, 196, 112));
+	        nameField.setBackground(new Color(179, 200, 207)); // light gray
 
 	        JLabel ageLabel = new JLabel("Age:");
+	        ageLabel.setBackground(new Color(190,215,220));
 	        ageField = new JTextField();
-	      
+	        ageField.setBackground(new Color(179, 200, 207));
+
 	        JLabel genderLabel = new JLabel("Gender:");
 	       
 	        String[] genders = {"Male", "Female", "Walmart Bag","Other"}; // Options for gender selection
 	        genderCombo = new JComboBox<>(genders); // Combo box initialized with gender options
+	        genderCombo.setBackground(new Color(245, 245, 245));
 
 	        JButton submitButton = new JButton("Submit");
 
@@ -847,14 +907,14 @@ getContentPane().add(panel);
 
             JLabel nameLabel = new JLabel("Name:");
             nameField = new JTextField();
-
+nameField.setBackground(new Color(245, 245, 245)); // light gray
             JLabel ageLabel = new JLabel("Age:");
             ageField = new JTextField();
-
+ageField.setBackground(new Color(245,245,245));
             JLabel genderLabel = new JLabel("Gender:");
             String[] genders = {"Male", "Female", "Walmart Bag", "Other"};
             genderCombo = new JComboBox<>(genders);
-
+genderCombo.setBackground(new Color(245,245,245));
             JButton submitButton = new JButton("Submit");
             JButton backButton = new JButton("Go Back");
 
@@ -910,8 +970,8 @@ getContentPane().add(panel);
                     try {
                        Librarian newLibrarian = new Librarian(name, age, gender, id);
                        librarian.add(newLibrarian);
-                       newLibrarian.readDataFromFileL();
-                       newLibrarian.writeDataToFileL();
+                      // newLibrarian.readDataFromFileL();
+                     //  newLibrarian.writeDataToFileL();
                     } catch (IllegalArgumentException ex) {
                         JOptionPane.showMessageDialog(null, "Error creating Librarian. Please try again.");
                         return;
