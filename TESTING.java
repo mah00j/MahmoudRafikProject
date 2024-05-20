@@ -1,20 +1,27 @@
 package Project;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.util.*;
-import java.util.logging.*;
-import java.io.*;
-import java.net.*;
-
-import static Project.Librarian.librarian; 
 import static Project.Book.books;
-import static Project.User.users; 
+import static Project.Librarian.librarian;
+import static Project.User.users;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities; 
 
 public class TESTING extends JFrame  {
 	private JButton librarianButton;
@@ -23,7 +30,7 @@ public class TESTING extends JFrame  {
 
   
     Book book1 = new Book(111,"test","ra","scifi",true,false);
-    Book book2 = new Book(222,"testing","ra","scifi",true,false);
+    Book book2 = new Book(222,"testing","ra","fiction",true,false);
 User userq = new User("rafik",22,"male",345);
 
 Librarian lib = new Librarian("ali",22,"male",34545);
@@ -95,22 +102,15 @@ mainPanel.setBackground(new Color(122,178,178));
        users.add(userq);
        librarian.add(lib);
        try {
-    	   ReadWrite w = new ReadWrite();
-//    	    ReadWrite.readFromFileB("books.txt");
+   	        
+    	    ReadWrite.readFromFileB("books.txt");
     	    ReadWrite.readFromFileU("Users.txt");
     	    ReadWrite. readFromFileL("Librarian.txt");
     	} catch (IOException e) {
     	    e.printStackTrace();
     	}  
 
-//    	try {
-//    		 ReadWrite w = new ReadWrite();
-//    	    w.writeToFileB("Books.txt", books);
-//    	    w.writeToFileU("User.txt", users);
-//    	   w.writeToFileL("Librarian.txt", librarian);
-//    	} catch (IOException e) {
-//    	    e.printStackTrace();
-//    	}
+
 
       
        
@@ -478,11 +478,19 @@ JFrame f = new JFrame();
                 
                 }
             });
-            exit.addActionListener(new ActionListener() {
+            exit.addActionListener(new ActionListener() { // when user is clicked it exits
                 public void actionPerformed(ActionEvent e) {
-
-                dispose();
-                
+                 	try {
+               		 ReadWrite w = new ReadWrite();
+               	   ReadWrite.writeToFileB("Books.txt", books);
+               	    ReadWrite.writeToFileU("User.txt", users);
+               	   ReadWrite.writeToFileL("Librarian.txt", librarian);
+               	  
+               	} catch (IOException S) {
+               	    S.printStackTrace();
+               	 System.err.print("I am here");
+               	}
+                    dispose();
                 }
             });
             
@@ -510,7 +518,7 @@ panel.add(exit);
              setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
          	setLocationRelativeTo(null);
  JFrame f = new JFrame();
-         	JPanel panel = new JPanel(new GridLayout(11, 1,10,10));
+         	JPanel panel = new JPanel(new GridLayout(12, 1,10,10));
             panel.setBackground(new Color(240, 240, 240)); // Light gray background
             
             JButton addLibrarian = new JButton("Add Librarian");
@@ -636,7 +644,7 @@ return;
                          return;
                 	 }
                 	 else
-                	 lib.SearchBookByGenre(g);
+                		 JOptionPane.showMessageDialog(null,lib.SearchBookByGenre(g));
                 }
             });
             AddBook.addActionListener(new ActionListener() {
@@ -653,14 +661,21 @@ return;
                 
                 }
             });
-            exit.addActionListener(new ActionListener() {
+            exit.addActionListener(new ActionListener() { // when user is clicked it exits
                 public void actionPerformed(ActionEvent e) {
-
-                dispose();
-                
+                 	try {
+               		 ReadWrite w = new ReadWrite();
+               	   ReadWrite.writeToFileB("Books.txt", books);
+               	    ReadWrite.writeToFileU("User.txt", users);
+               	   ReadWrite.writeToFileL("Librarian.txt", librarian);
+               	  
+               	} catch (IOException S) {
+               	    S.printStackTrace();
+      	 
+               	}
+                    dispose();
                 }
             });
-           
            
             
             
@@ -675,6 +690,7 @@ return;
             panel.add(reserveBook);
             panel.add(AddBook);
             panel.add(goBack);
+            panel.add(exit);
             getContentPane().add(panel);
     	}
     }
@@ -1184,7 +1200,8 @@ genderCombo.setBackground(new Color(245,245,245));
 
  getContentPane().add(panel);
  //add the JPanel (panel) to the content pane of the JFrame
-     
+  
+ 
         }
   	    }
  }
